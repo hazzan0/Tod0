@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="item" type="text" placeholder="Item"><br><br>
+    <input id="qty" type="text" placeholder="Qty"><br><br>
+    <input id="price" type="text" placeholder="Price"><br><br>
+    <button onclick="add()">Add</button><br><br>
+
+
+
+    <button onclick="showItem()">Show Bought Items</button>
+
+
+
+
+    <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="table"></tbody>
+        </table>
+</body>
+</html>
+
+
+<script>
+    let item = document.getElementById("item")
+    let qty = document.getElementById("qty")
+    let price = document.getElementById("price")
+    let table = document.getElementById("table")
+    // let allTable = document.getElementById("table")
+    let shoppingList = []
+    let showBoughtItems = []
+
+    function add(){
+        let data = {
+            item: item.value,
+            qty: qty.value,
+            price: price.value,
+            bought: false
+        }
+        shoppingList.push(data);
+        // showBoughtItems.push(data)
+        console.log(shoppingList);
+        // shoppingList.push(table.value)
+        // allTable.innerHTML += "";
+        dispTable()
+    }
+
+    function dispTable(){
+    if(shoppingList == ""){
+        table.innerHTML = "There are no item currently"
+    }else{
+        table.innerHTML = ""
+        for(let index = 0; index < shoppingList.length; index ++){
+            const element = shoppingList[index];
+            table.innerHTML += `
+                <tr>
+                    <td>${element.item}</td>
+                    <td>${element.qty}</td>
+                    <td>${element.price}</td>
+                    <td>
+                        <button onclick="buyItem(${index})">Bought</button>
+                    </td>
+                    <td>${element.bought}</td>
+                </tr>
+            `
+        }
+        }
+    }
+    dispTable()
+
+    function buyItem(i){
+        shoppingList[i].bought = true;
+        if (shoppingList[i].bought){
+            showBoughtItems.push(shoppingList[i]);
+        }
+        dispTable()
+    }
+
+    function showItem(){
+        if(showBoughtItems.length == 0){
+            table.innerHTML = "No Items"
+        }else{
+            table.innerHTML = ""
+        for(let index = 0; i < showBoughtItems.length; i ++){
+            const element = showBoughtItems[i];
+            table.innerHTML += `
+                <tr>
+                    <td>${element.item}</td>
+                    <td>${element.qty}</td>
+                    <td>${element.price}</td>
+                    <td>
+                        <button onclick="buyItem(${index})">Bought</button>
+                    </td>
+                    <td>${element.bought}</td>
+                </tr>
+            `
+        }
+        }
+    }
+</script>
